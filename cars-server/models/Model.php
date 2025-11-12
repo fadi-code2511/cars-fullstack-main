@@ -1,4 +1,5 @@
 <?php
+//abstract not allowe to instace an object of type Model
 abstract class Model{
 
     protected static string $table;
