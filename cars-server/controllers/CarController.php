@@ -18,6 +18,32 @@ function getCarByID(){
     return;
 }
 
+function getCars(){
+    global $connection;
+
+    if(isset($_GET["id"])){
+        $id = $_GET["id"];
+        $car = Car::find($connection, $id);
+
+        if($car){
+            echo ResponseService::response(200, $car->toArray());
+        }else{
+            echo ResponseService::response(404, "Car not found");
+        }
+    } else {
+        $cars = Car::findAll($connection);
+        $cars_array = [];
+
+        for ($i = 0; $i < count($cars); $i++) {
+            $cars_array[] = $cars[$i]->toArray();
+            }
+
+        echo ResponseService::response(200, $cars_array);
+    }
+}
+
+
+
 //getCarById();
 getCars();
 
