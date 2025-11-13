@@ -49,6 +49,14 @@ public static function update(mysqli $connection, int $id, array $data) {
     return $query->execute();
 }
 
+public static function delete(mysqli $connection, int $id) {
+    $sql = "DELETE FROM " . static::$table . " WHERE " . static::$primary_key . " = ?";
+
+    $query = $connection->prepare($sql);
+    $query->bind_param("i", $id);
+
+    return $query->execute();
+}
 
 
 }

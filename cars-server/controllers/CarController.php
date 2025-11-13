@@ -67,9 +67,29 @@ function updateCar(){
 }
 
 
+function deleteCar(){
+    global $connection;
+
+    if(!isset($_GET["id"])){
+        echo ResponseService::response(400, "Missing ID");
+        return;
+    }
+
+    $id = $_GET["id"];
+
+    if(Car::delete($connection, $id)){
+        echo ResponseService::response(200, "Car deleted successfully");
+    } else {
+        echo ResponseService::response(500, "Failed to delete car");
+    }
+}
+
+
 //getCarById();
 // getCars();
-updateCar();
+// updateCar();
+
+
 //ToDO: 
 //transform getCarByID to getCars()
 //if the id is set? then we retrieve the specific car 
