@@ -43,10 +43,33 @@ function getCars(){
 }
 
 
+function updateCar(){
+    global $connection;
+
+    if(!isset($_GET["id"])){
+        echo ResponseService::response(400, "Missing ID");
+        return;
+    }
+
+    $id = $_GET["id"];
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if(!$data){
+        echo ResponseService::response(400, "No data to update");
+        return;
+    }
+
+    if(Car::update($connection, $id, $data)){
+        echo ResponseService::response(200, "Car updated successfully");
+    } else {
+        echo ResponseService::response(500, "Failed to update car");
+    }
+}
+
 
 //getCarById();
-getCars();
-
+// getCars();
+updateCar();
 //ToDO: 
 //transform getCarByID to getCars()
 //if the id is set? then we retrieve the specific car 

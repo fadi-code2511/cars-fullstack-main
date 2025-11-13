@@ -26,7 +26,7 @@ abstract class Model{
     public static function findAll(mysqli $connection){
     $sql = sprintf("SELECT * FROM %s", 
     static::$table);
-    
+
     $query = $connection->prepare($sql);
     $query->execute();
 
@@ -40,7 +40,19 @@ abstract class Model{
     return $objects;
 }
 
+public static function update(mysqli $connection, int $id, array $data) {
+    $sql = "UPDATE " . static::$table . " SET name = ?, year = ?, color = ? WHERE " . static::$primary_key . " = ?";
+
+    $query = $connection->prepare($sql);
+    $query->bind_param("sssi", $data["name"], $data["year"], $data["color"], $id);
+
+    return $query->execute();
 }
+
+
+
+}
+
 
 
 
