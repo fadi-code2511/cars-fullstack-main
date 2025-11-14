@@ -58,6 +58,22 @@ public static function delete(mysqli $connection, int $id) {
     return $query->execute();
 }
 
+public static function create(mysqli $connection, array $data) {
+    $sql = "INSERT INTO " . static::$table . " (name, year, color) VALUES (?, ?, ?)";
+
+    $query = $connection->prepare($sql);
+    $query->bind_param("sss", $data["name"], $data["year"], $data["color"]);
+
+    if($query->execute()){
+        // https://www.php.net/manual/en/mysqli.insert-id.php
+        // Returns the value generated for an AUTO_INCREMENT column by the last query
+        return $connection->insert_id; 
+    } else {
+        return null;
+    }
+}
+
+
 
 }
 

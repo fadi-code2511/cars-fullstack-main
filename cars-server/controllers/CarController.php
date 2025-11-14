@@ -84,7 +84,26 @@ function deleteCar(){
     }
 }
 
+function createCar(){
+    global $connection;
 
+    $data = json_decode(file_get_contents("php://input"), true);
+
+    if(!$data){
+        echo ResponseService::response(400, "No data received");
+        return;
+    }
+
+    $new_id = Car::create($connection, $data);
+
+    if($new_id){
+        echo ResponseService::response(201, "Car added successfully with ID: " . $new_id);
+    } else {
+        echo ResponseService::response(500, "Failed to add car");
+    }
+}
+
+createCar();
 //getCarById();
 // getCars();
 // updateCar();
